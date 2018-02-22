@@ -1,4 +1,4 @@
-package model;
+package com.example.jaime.keeper.model;
 
 /**
  * Created by jaime on 21/02/18.

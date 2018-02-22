@@ -1,23 +1,26 @@
 package com.example.jaime.keeper;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import model.ResponseAuthUser;
+import com.example.jaime.keeper.model.ResponseAuthUser;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
         private EditText nombre;
         private EditText email;
         private EditText pass;
         private Button login;
         private Button register;
-        private Call<ResponseAuthUser> peticion;
+        private Call<ResponseAuthUser> peticionLogin;
+        private Call<ResponseAuthUser> peticionRegistro;
+        KeeperService apiMiguel = ServiceGenerator.createService(KeeperService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +32,53 @@ public class MainActivity extends AppCompatActivity {
         nombre = findViewById(R.id.nombreUsuario);
         email = findViewById(R.id.emailUsuario);
         pass = findViewById(R.id.passUsuario);
-        KeeperService apiMiguel = ServiceGenerator.createService(KeeperService.class);
 
-        peticion = apiMiguel.doLogin(email.getText().toString(), pass.getText().toString());
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                peticion.enqueue(new Callback<ResponseAuthUser>() {
+
+
+                if(checkFieldsLogin()) {
+                    peticionLogin = apiMiguel.doLogin(email.getText().toString(), pass.getText().toString());
+                }
+                peticionLogin.enqueue(new Callback<ResponseAuthUser>() {
                     @Override
                     public void onResponse(Call<ResponseAuthUser> call, Response<ResponseAuthUser> response) {
+                        if(response.isSuccessful()){
+                            ResponseAuthUser user = response.body();
+                            Intent i = new Intent(MainActivity.this, MenuActivity.class);
+                            i.putExtra("emailUsuario", email.getText().toString());
+                            i.putExtra("passUsuario", pass.getText().toString());
+                            startActivity(i);
 
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseAuthUser> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkFieldsRegister()){
+                    peticionRegistro = apiMiguel.doRegister(nombre.getText().toString(), email.getText().toString(), pass.getText().toString());
+                }
+                peticionRegistro.enqueue(new Callback<ResponseAuthUser>() {
+                    @Override
+                    public void onResponse(Call<ResponseAuthUser> call, Response<ResponseAuthUser> response) {
+                        if(response.isSuccessful()){
+                            ResponseAuthUser user = response.body();
+                            Intent i = new Intent(MainActivity.this, MenuActivity.class);//TODO pasarle la actividad a la que quiero ir
+                            i.putExtra("nombreUsuario", nombre.getText().toString());
+                            i.putExtra("emailUsuario", email.getText().toString());
+                            i.putExtra("passUsuario", pass.getText().toString());
+                            startActivity(i);
+                        }
                     }
 
                     @Override
@@ -51,11 +90,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkFields(){
+    private boolean checkFieldsRegister(){
         boolean res = false;
-
+        if (nombre.getText().toString().length() == 0 || nombre.getText().toString() == " "){
+            nombre.setError("introduzca nombre");
+        }else{
+               res = checkFieldsLogin();
+        }
         return res;
     }
+
+    private boolean checkFieldsLogin(){
+        boolean res = false;
+        if (email.getText().toString().length() == 0 || email.getText().toString() == " "){
+            email.setError("introduzca email");
+        }else{
+            if (pass.getText().toString().length() == 0 || pass.getText().toString() == " "){
+                pass.setError("introduzca pass");
+            }
+            res= true;
+    }return res;
+}
 }
 
 
