@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.jaime.keeper.model.ResponseAuthUser;
 import retrofit2.Call;
@@ -91,25 +92,28 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private boolean checkFieldsRegister(){
-        boolean res = false;
-        if (nombre.getText().toString().length() == 0 || nombre.getText().toString() == " "){
+        boolean res;
+
+        if (nombre.getText().toString().length() == 0 || nombre.getText().toString() == " ") {
             nombre.setError("introduzca nombre");
-        }else{
-               res = checkFieldsLogin();
+            res = false;
         }
+        res = checkFieldsLogin();
+
         return res;
     }
 
     private boolean checkFieldsLogin(){
-        boolean res = false;
-        if (email.getText().toString().length() == 0 || email.getText().toString() == " "){
+        boolean res= true;
+        if (email.getText().toString().trim().length() == 0) {
             email.setError("introduzca email");
-        }else{
-            if (pass.getText().toString().length() == 0 || pass.getText().toString() == " "){
-                pass.setError("introduzca pass");
-            }
-            res= true;
-    }return res;
+            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+            res=false;
+        }if (pass.getText().toString().trim().length() == 0 || pass.getText().toString() == " ") {
+            pass.setError("introduzca pass");
+            res=false;
+        }
+    return res;
 }
 }
 
