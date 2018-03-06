@@ -19,13 +19,40 @@ import retrofit2.http.POST;
 public interface KeeperService {
     @FormUrlEncoded
     @POST("auth/login")
-    Call<ResponseAuthUser> doLogin(@Field("email") String email,@Field("password") String pass);
+    Call<ResponseAuthUser> doLogin(@Field("email") String email,
+                                   @Field("password") String pass
+    );
 
     @FormUrlEncoded
     @POST("auth/register")
-    Call<ResponseAuthUser> doRegister(@Field("nombre") String nombre,@Field("email") String email,@Field("password") String pass);
+    Call<ResponseAuthUser> doRegister(@Field("nombre") String nombre,
+                                      @Field("email") String email,
+                                      @Field("password") String pass
+    );
 
-    @FormUrlEncoded
     @GET("nota/lista")
     Call<List<Nota>> listNotes (@Header("X-API-KEY") String token);
+
+    @POST("nota/nueva")
+    Call<Nota> addNote (@Header("X-API-KEY") String key,
+                          @Field("titulo") String titulo,
+                          @Field("descripcion") String descripcion,
+                          @Field("idcategoria") String idcategoria
+    );
+
+    @FormUrlEncoded
+    @POST("nota/editar")
+    Call<Nota> editNote (@Header("X-API-KEY") String key,
+                         @Field("id") String id_Nota,
+                         @Field("titulo") String titulo,
+                         @Field("descripcion") String descripcion,
+                         @Field("idcategoria") String idcategoria
+    );
+
+    @FormUrlEncoded
+    @POST("nota/eliminar")
+    Call<Nota> deleteNotes (@Header("X-API-KEY") String token,
+                            @Field("id") String id_Nota
+    );
+
 }

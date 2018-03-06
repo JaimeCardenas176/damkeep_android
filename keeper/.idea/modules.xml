@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\repo\Github\damkeep_android\keeper\app\app.iml" filepath="D:\repo\Github\damkeep_android\keeper\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/keeper.iml" filepath="$PROJECT_DIR$/keeper.iml" />
+      <module fileurl="file://D:\repo\Github\damkeep_android\keeper\keeper.iml" filepath="D:\repo\Github\damkeep_android\keeper\keeper.iml" />
     </modules>
   </component>
 </project>

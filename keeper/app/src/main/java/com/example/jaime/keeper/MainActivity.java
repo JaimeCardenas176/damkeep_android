@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity{
                             Intent i = new Intent(MainActivity.this, MenuActivity.class);
                             i.putExtra("emailUsuario", email.getText().toString());
                             i.putExtra("passUsuario", pass.getText().toString());
+                            i.putExtra("X-API-KEY", user.getKey());
                             startActivity(i);
 
                         }
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity{
                             i.putExtra("nombreUsuario", nombre.getText().toString());
                             i.putExtra("emailUsuario", email.getText().toString());
                             i.putExtra("passUsuario", pass.getText().toString());
+                            i.putExtra("X-API-KEY", user.getKey());
                             startActivity(i);
                         }
                     }

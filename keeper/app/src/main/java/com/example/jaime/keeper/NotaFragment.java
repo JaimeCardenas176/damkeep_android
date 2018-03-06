@@ -1,6 +1,8 @@
 package com.example.jaime.keeper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -16,6 +18,10 @@ import com.example.jaime.keeper.model.Nota;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -23,13 +29,14 @@ import java.util.List;
  * interface.
  */
 public class NotaFragment extends Fragment {
-
+    Bundle bundle=getArguments();
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 2;
     private OnListFragmentInteractionListener mListener;
     private List<Nota> notas;
+    private Context context;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -61,6 +68,21 @@ public class NotaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nota_list, container, false);
+        KeeperService api = ServiceGenerator.createService(KeeperService.class);
+        Call<List<Nota>> misNotas = api.listNotes(bundle.get("X-API_KEY").toString());
+        misNotas.enqueue(new Callback<List<Nota>>() {
+            @Override
+            public void onResponse(Call<List<Nota>> call, Response<List<Nota>> response) {
+                if (response.isSuccessful()){
+                    notas=response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Nota>> call, Throwable t) {
+
+            }
+        });
 
         // Set the adapter
         if (view instanceof RecyclerView) {

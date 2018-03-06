@@ -64,7 +64,12 @@ public class MyNotaRecyclerViewAdapter extends RecyclerView.Adapter<MyNotaRecycl
             titulo = (EditText) view.findViewById(R.id.editTextTitulo);
             descripcion = (EditText) view.findViewById(R.id.editTextDescripcion);
             categoria = (TextView) view.findViewById(R.id.textViewCategoriaReal);
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
         }
 
         @Override
