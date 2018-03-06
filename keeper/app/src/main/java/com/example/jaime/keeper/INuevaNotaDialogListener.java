@@ -5,5 +5,5 @@ package com.example.jaime.keeper;
  */
 
 interface INuevaNotaDialogListener {
-    void onGuardarClick(String nombre);
+    void onGuardarClick(String nombre, String body, String idNota);
 }

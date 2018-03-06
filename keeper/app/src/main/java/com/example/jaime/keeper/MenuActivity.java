@@ -20,6 +20,10 @@ import android.widget.Spinner;
 
 import com.example.jaime.keeper.model.Nota;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NotaFragment.OnListFragmentInteractionListener, INuevaNotaDialogListener {
@@ -119,7 +123,24 @@ public class MenuActivity extends AppCompatActivity
     }
 
     @Override
-    public void onGuardarClick(String nombre) {
+    public void onGuardarClick(String nombre,String body, String idNota) {
+        Bundle extras2 = getIntent().getExtras();
+        String key2 = extras2.getString("X-API-KEY");
+        KeeperService api =  ServiceGenerator.createService(KeeperService.class);
+        Call<Nota> notaGuarda = api.addNote(key2, nombre, body, idNota);
+        notaGuarda.enqueue(new Callback<Nota>() {
+            @Override
+            public void onResponse(Call<Nota> call, Response<Nota> response) {
+                if (response.isSuccessful()){
+                    Nota n=response.body();
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Nota> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -30,6 +31,7 @@ public class confirmFragment extends DialogFragment {
     EditText editTextTitulo, cuerpo;
     Context ctx = getContext();
     Spinner spinnerCategorias;
+    Categoria cat;
 
     public confirmFragment() {
 
@@ -67,8 +69,18 @@ public class confirmFragment extends DialogFragment {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                     spinnerCategorias.setAdapter(adapter);
-                    //wtf pasa aqui??
-                    spinnerCategorias.setOnItemSelectedListener(this);
+                    // wtf pasa aqui??
+                    spinnerCategorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                cat=listaCategorias.get(i);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
                 }
             }
 
@@ -86,8 +98,8 @@ public class confirmFragment extends DialogFragment {
                         // Send the positive button event back to the host activity
                         String titulo = editTextTitulo.getText().toString();
                         String body = cuerpo.getText().toString();
-
-                        mListener.onGuardarClick(titulo);
+                        int idNota=cat.getId();
+                        mListener.onGuardarClick(titulo, body, String.valueOf(idNota));
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
