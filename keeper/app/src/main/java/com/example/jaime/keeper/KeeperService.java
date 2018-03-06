@@ -1,5 +1,6 @@
 package com.example.jaime.keeper;
 
+import com.example.jaime.keeper.model.Categoria;
 import com.example.jaime.keeper.model.Nota;
 
 import java.util.List;
@@ -54,5 +55,8 @@ public interface KeeperService {
     Call<Nota> deleteNotes (@Header("X-API-KEY") String token,
                             @Field("id") String id_Nota
     );
+    @FormUrlEncoded
+    @GET("categoria/lista")
+    Call<Categoria> listarCategorias(@Header("X-API-KEY") String token);
 
 }

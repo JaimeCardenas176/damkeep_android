@@ -1,5 +1,6 @@
 package com.example.jaime.keeper;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +68,8 @@ public class MyNotaRecyclerViewAdapter extends RecyclerView.Adapter<MyNotaRecycl
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //que pasa aqui cuando se pincha en una nota?
+                    //TODO aqui se hace algo cuando se pincha en la nota
+                    Intent i = new Intent();
                 }
             });
         }

@@ -29,14 +29,13 @@ import retrofit2.Response;
  * interface.
  */
 public class NotaFragment extends Fragment {
-    Bundle bundle=getArguments();
+
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 2;
     private OnListFragmentInteractionListener mListener;
     private List<Nota> notas;
-    private Context context;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,9 +63,11 @@ public class NotaFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Bundle bundle=getActivity().getIntent().getExtras();
         View view = inflater.inflate(R.layout.fragment_nota_list, container, false);
         KeeperService api = ServiceGenerator.createService(KeeperService.class);
         Call<List<Nota>> misNotas = api.listNotes(bundle.get("X-API_KEY").toString());
