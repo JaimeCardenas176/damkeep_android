@@ -67,7 +67,7 @@ public class confirmFragment extends DialogFragment {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                     spinnerCategorias.setAdapter(adapter);
-
+                    //wtf pasa aqui??
                     spinnerCategorias.setOnItemSelectedListener(this);
                 }
             }
